@@ -1,20 +1,12 @@
 from fastapi import FastAPI
 
 import pymongo
+import requests
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 uri = "mongodb+srv://epic:epic@greenbasketdb.ilubdxm.mongodb.net/?retryWrites=true&w=majority"
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
-
-
-
-
-
-
-
-
-
 
 from openfoodfacts import API, APIVersion, Country, Environment, Flavor
 
@@ -71,17 +63,29 @@ def giveProdGetInfo(id: str):
     categories = prod["product"]["categories_hierarchy"]
     deepestCategory = categories[len(categories)-1]
 
-    listOfAlternatives = api.product.getAlternatives(deepestCategory).json()["products"]
+    listOfAlternatives = getAlternatives(deepestCategory).json()["products"]
 
     listOfAlternatives.sort(key= lambda x: x['ecoscore_score'], reverse=True)
 
     imageURL = prod["product"]["image_url"]
 
-    
 
     ret = {"name": name, "score": ecoscore, "alts": listOfAlternatives, "image": imageURL}
 
     return {"res": ret}
+
+def getAlternatives(category):
+        headers = { 
+            'accept': 'application/json',
+        }
+        params = {
+            'categories_tags': category,
+            'fields': 'code,product_name,ecoscore_score',
+        }
+
+        response = requests.get('https://us.openfoodfacts.net/api/v2/search', params=params, headers=headers)
+
+        return response
 
 
 def searchEngine(toSearch):
