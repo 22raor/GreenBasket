@@ -22,7 +22,7 @@ async def root(id):
 
 @app.get("/autocomplete/{product_query}")
 async def autocomplete(product_query: str):
-    return {searchEngine(product_query)}
+    return {"result": searchEngine(product_query)}
 
 
 def searchEngine(toSearch):
