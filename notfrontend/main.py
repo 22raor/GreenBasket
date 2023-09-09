@@ -45,7 +45,7 @@ async def product(id: str):
 
 def giveProdGetInfo(id: str):
     prod = api.product.get(id)
-    name = prod["product"]["generic_name_en"]
+    name = prod["product"]["product_name"]
 
     ecoscore = prod["product"]["ecoscore_score"]
 
@@ -60,7 +60,7 @@ def giveProdGetInfo(id: str):
 
     
 
-    ret = {"score": ecoscore, "alts": listOfAlternatives, "image": imageURL}
+    ret = {"name": name, "score": ecoscore, "alts": listOfAlternatives, "image": imageURL}
 
     return {"res": ret}
 
