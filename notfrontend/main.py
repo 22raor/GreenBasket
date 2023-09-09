@@ -11,4 +11,4 @@ async def root():
 
 @app.get("/eco_score/{id}")
 async def root(id):
-    return {"eco_score": id // 2}
+    return {"eco_score": int(id) // 2}
