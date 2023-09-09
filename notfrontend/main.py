@@ -8,6 +8,14 @@ uri = "mongodb+srv://epic:epic@greenbasketdb.ilubdxm.mongodb.net/?retryWrites=tr
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 
+
+
+
+
+
+
+
+
 from openfoodfacts import API, APIVersion, Country, Environment, Flavor
 
 api = API(
@@ -19,7 +27,18 @@ api = API(
     environment=Environment.org,
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins
+)
 
 
 @app.get("/")
