@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/aos.min.css">
     <link rel="stylesheet" href="assets/css/Hero-Carousel-images.css">
     <link rel="stylesheet" href="assets/css/Loading-Page-Animation-Style-styles.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
@@ -314,7 +315,7 @@ function loadPieChart(score) {
         }
     
 </style>
-    <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
+    <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" data-aos="fade" data-aos-delay="250" id="mainNav" style="background: #fcf7e5;height: 100px;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
             <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
                 <ul class="navbar-nav mx-auto"></ul><a href="#"></a><a href="features.html" style="padding-right: 40px;">View Basket</a>
@@ -442,6 +443,7 @@ function addToCart(currProduct) {
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 </div></div>
                         </div>
+                        <header></header>
                     </div>
                     <p class="card-text"></p>
                 </div>
@@ -456,13 +458,14 @@ function addToCart(currProduct) {
                     <header></header>
                 </div>
             </div>
+            <h1 style="color: var(--bs-body-color);"><strong>Alternatives</strong></h1>
             <div></div>
             <header></header>
             <header></header>
-            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3" style="margin-top: 20px;">
                 <div class="col">
                     <div class="card">
-                        <div class="card-body p-4" style="background: var(--bs-light);">
+                        <div class="card-body p-4" data-aos="fade-up" style="background: var(--bs-light);">
                             <p class="text-primary card-text mb-0" id="altcode1">Item Code</p>
                             <h3 class="card-title" id="altname1">Alternative 1</h3>
                             <p class="card-text"></p>
@@ -479,7 +482,7 @@ function addToCart(currProduct) {
                 </div>
                 <div class="col">
                     <div class="card">
-                        <div class="card-body p-4" style="background: var(--bs-light);">
+                        <div class="card-body p-4" data-aos="fade-up" data-aos-delay="100" style="background: var(--bs-light);">
                             <p class="text-primary card-text mb-0" id="altcode2">Item Code</p>
                             <h3 class="card-title" id="altname2">Alternative 2</h3>
                             <p class="card-text"></p>
@@ -490,7 +493,7 @@ function addToCart(currProduct) {
                 </div>
                 <div class="col">
                     <div class="card">
-                        <div class="card-body p-4" style="background: var(--bs-light);">
+                        <div class="card-body p-4" data-aos="fade-up" data-aos-delay="200" style="background: var(--bs-light);">
                             <p class="text-primary card-text mb-0" id="altcode3">Item Code</p>
                             <h3 class="card-title" id="altname3">Alternative 3</h3>
                             <p class="card-text"></p>
@@ -504,6 +507,7 @@ function addToCart(currProduct) {
     </section>
     <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;"></footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/aos.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
     <script src="assets/js/Page-Loader-pageloader.js"></script>

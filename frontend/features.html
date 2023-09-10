@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
+<html data-bs-theme="light" lang="en" style="background: #7f9107;">
 
 <head>
     <meta charset="utf-8">
@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/aos.min.css">
     <link rel="stylesheet" href="assets/css/Hero-Carousel-images.css">
     <link rel="stylesheet" href="assets/css/Loading-Page-Animation-Style-styles.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
@@ -31,7 +32,7 @@
 <script src="./script.js"></script>
 </head>
 
-<body>
+<body style="background: #7f9107;">
 
 <script> 
     
@@ -77,8 +78,8 @@
 
   <div class="extra content">
   
-<div class="ui bottom attached button" onclick="deleto(${product.id})">
-      <i class="add icon"></i>
+<div class="ui red bottom attached button" onclick="deleto(${product.id})">
+      <i class="minus icon"></i>
       Delete From Basket
     </div>
   </div>
@@ -104,8 +105,14 @@ $(window).on('load', function(){
 
 displayCartItems();
     let avg = (count/number+0.0);
-   avg = Math.round(avg * 100) / 100
-     $('#Average').text(`Your average EcoScore is `+ avg)   
+avg = Math.round(avg * 100) / 100;
+$('#Average').html(`
+  <div style="text-align: center; margin-left: -80px; margin-right: 70px;">
+    <b>Your average EcoScore is: </b><br>
+    <span style="font-size: 90px; ">${avg}</span>
+  </div>
+`);
+
     
     basketgraph([60,40,50,40]);
     
@@ -144,7 +151,7 @@ displayCartItems();
         
          let avg = (count/number+0.0);
    avg = Math.round(avg * 100) / 100
-     $('#Average').text(`Your average EcoScore is `+ avg)   
+     $('#Average').text(`Your average EcoScore is`+ avg)   
     
 }
 
@@ -243,7 +250,7 @@ displayCartItems();
 
     
 </script>
-    <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
+    <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" data-aos="fade" data-aos-delay="250" id="mainNav" style="background: #fcf7e5;height: 100px;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
             <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
                 <ul class="navbar-nav mx-auto"></ul><a href="#"></a><a href="features.html" style="padding-right: 40px;">View Basket</a>
@@ -255,7 +262,7 @@ displayCartItems();
     </nav>
     <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;"></footer>
     <div class="row d-md-flex flex-row justify-content-md-center" style="padding-bottom: 0px;padding-top: 104px;">
-        <div class="col" style="padding-top: 54px;margin-left: 36px;">
+        <div class="col" style="padding-top: 54px;margin-left: 36px;color: var(--bs-light);">
 
 
 <div id = "cart-container" class="ui cards"> 
@@ -266,7 +273,7 @@ displayCartItems();
 
 </div>
         <div class="col" style="margin-top: 82px;">
-            <h1 id="Average">Heading</h1><div>
+            <h1 data-aos="fade-up" data-aos-delay="200" id="Average" style="color: var(--bs-light);"><strong>Heading</strong></h1><div>
 <canvas id="myChart2"></canvas>
 
 </div>
@@ -276,6 +283,7 @@ displayCartItems();
         </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/aos.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
     <script src="assets/js/Page-Loader-pageloader.js"></script>
