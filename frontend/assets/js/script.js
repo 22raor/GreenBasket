@@ -56,6 +56,7 @@ const configureClient = async () => {
     console.log("Bitch we already logged in")
     // document.getElementById("btn-logout").disabled = !isAuthenticated;
      $('#loginbutton').text('Log Out')
+       $('#loginbutton').attr("onclick","logout()")
     // document.getElementById("btn-login").disabled = isAuthenticated;
   };
 
