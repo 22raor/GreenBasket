@@ -70,6 +70,21 @@ def giveProdGetInfo(id: str):
     imageURL = prod["product"]["image_url"]
 
 
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_agriculture"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_consumption"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_distribution"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_packaging"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_processing"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_total"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["co2_transportation"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_agriculture"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_consumption"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_distribution"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_packaging"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_processing"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_total"]
+    prod["product"]["ecoscore_data"]["agribalyse"]["ef_transportation"]
+
     ret = {"name": name, "score": ecoscore, "alts": listOfAlternatives, "image": imageURL}
 
     return {"res": ret}
@@ -77,6 +92,7 @@ def giveProdGetInfo(id: str):
 def getAlternatives(category):
         headers = { 
             'accept': 'application/json',
+            'User-Agent': 'greenbasket/1.0'
         }
         params = {
             'categories_tags': category,
