@@ -40,11 +40,13 @@ const configureClient = async () => {
       // Process the login state
       await auth0Client.handleRedirectCallback();
       
-      updateUI();
+        
     
-        let user = JSON.stringify(
-      await auth0Client.getUser()
-    );
+        let user = await auth0Client.getUser();
+        
+        updateUI(user);
+
+
         
         console.log(user)
       // Use replaceState to redirect the user away and remove the querystring parameters
@@ -54,14 +56,15 @@ const configureClient = async () => {
   
   
   // NEW
-  const updateUI = async () => {
+  const updateUI = async (user) => {
     const isAuthenticated = await auth0Client.isAuthenticated();
   
     //change text on button to signed in instead of log in
     console.log("Bitch we already logged in")
     // document.getElementById("btn-logout").disabled = !isAuthenticated;
      if(isAuthenticated){
-         $('#loginbutton').text('Log Out')
+         $('#loginbutton').text("Hi " + user['given_name']+"!")
+         
        $('#loginbutton').attr("onclick","logout()")
      }
      
