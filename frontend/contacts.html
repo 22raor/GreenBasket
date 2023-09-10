@@ -3,6 +3,11 @@
 
 <head>
     <meta charset="utf-8">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+</head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Contacts - GreenBasket</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -10,7 +15,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="assets/css/Hero-Carousel-images.css">
+    <link rel="stylesheet" href="assets/css/Loading-Page-Animation-Style-styles.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="assets/css/Page-Loader.css">
 </head>
 
 <body>
@@ -18,7 +25,10 @@
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
             <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
                 <ul class="navbar-nav mx-auto"></ul><a href="#"></a>
-            </div><a class="btn btn-primary shadow" role="button" href="untitled.html" style="background: #7f9107;border-color: #7f9107;">Log In</a>
+            </div><a class="btn btn-primary shadow" role="button" onclick="login()" style="background: #7f9107;border-color: #7f9107;">Log In</a>
+ 
+<!--     <script src="./script.js"></script> -->
+
         </div>
     </nav>
     <section class="py-5 mt-5">
@@ -92,6 +102,9 @@
     </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
+    <script src="assets/js/Page-Loader-pageloader.js"></script>
+    <script src="assets/js/script.js"></script>
     <script src="assets/js/startup-modern.js"></script>
 </body>
 

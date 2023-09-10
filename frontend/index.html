@@ -3,15 +3,21 @@
 
 <head>
     <meta charset="utf-8">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+</head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - GreenBasket</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.reflowhq.com/v2/toolkit.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="assets/css/Hero-Carousel-images.css">
+    <link rel="stylesheet" href="assets/css/Loading-Page-Animation-Style-styles.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="assets/css/Page-Loader.css">
 </head>
 
 <body>
@@ -19,24 +25,160 @@
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
             <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
                 <ul class="navbar-nav mx-auto"></ul><a href="#"></a>
-            </div><a class="btn btn-primary shadow" role="button" href="untitled.html" style="background: #7f9107;border-color: #7f9107;">Log In</a>
+            </div><a class="btn btn-primary shadow" role="button" onclick="login()" style="background: #7f9107;border-color: #7f9107;">Log In</a>
+ 
+<!--     <script src="./script.js"></script> -->
+
         </div>
     </nav>
     <header class="pt-5" style="color: var(--bs-body-bg);background: #7f9107;height: 1300px;">
         <div class="container pt-4 pt-xl-5">
-            <div class="row pt-5" style="background: #7f9107;color: var(--bs-body-bg);height: 500px;padding-bottom: 130px;margin-bottom: -128px;">
-                <div class="col-md-8 col-xl-7 text-center text-md-start mx-auto">
+            <div class="row pt-5" style="background: #7f9107;color: var(--bs-body-bg);height: 400px;padding-bottom: 130px;margin-bottom: -128px;">
+                <div class="col-md-8 col-xl-7 text-center text-md-start mx-auto" style="height: 200;">
                     <div class="text-center">
-                        <h1 class="display-4 fw-bold mb-5" style="padding-top: 28px;">Find out how sustainable your food is... (rework)</h1>
+                        <h1 class="display-4 fw-bold mb-5" style="padding-top: 28px;padding-bottom: 0px;margin-bottom: -4px;margin-top: 20px;">Find out how sustainable your food is... (rework)</h1>
                         <p class="fs-5 text-muted mb-5"></p>
                     </div>
-                    <div data-reflow-type="product-search" style="margin-top: 80px;"></div>
                 </div>
             </div>
         </div>
         <div class="container py-4 py-xl-5">
+            <div class="col">
+                <div></div>
+            </div>
             <div class="row mb-5">
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <div class="col-md-8 col-xl-6 text-center mx-auto"><div class="search-container">
+        <input type="text" id="search-input" placeholder="Search...">
+        <div id="autocomplete-results" class="autocomplete-results"></div>
+    </div>
+
+<style>
+    /* styles.css */
+.search-container {
+    position: relative;
+    width: 500px;
+    margin: 20px auto;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.autocomplete-results {
+    position: absolute;
+    background:white;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
+}
+
+.autocomplete-item {
+    text-align: left;
+    padding: 10px;
+    color:black;
+    cursor: pointer;
+}
+
+.autocomplete-item:hover {
+    background-color: #f2f2f2;
+}
+
+</style>
+<script>
+    // script.js
+const searchInput = document.getElementById('search-input');
+const autocompleteResults = document.getElementById('autocomplete-results');
+
+// Function to fetch autocomplete results from the backend
+async function getAutocompleteResults(query) {
+    try {
+        // Replace with your backend endpoint
+        let response = "";
+      
+     await fetch("https://green-basket-api.vercel.app/autocomplete/"+query).then(response => response.json())
+.then(res => {
+    // console.log("got response")
+    response = res;
+
+})
+      
+      
+     
+        // let data = await response.json();
+      data = response;
+      
+      console.log(data)
+      
+      
+        return data['result']; // Assuming the backend returns an array of JSON objects
+    } catch (error) {
+        console.error('Error fetching autocomplete results:', error.toString());
+        return [];
+    }
+}
+
+// Function to display autocomplete results
+function showAutocompleteResults(results) {
+    autocompleteResults.innerHTML = '';
+
+    results.forEach((result) => {
+        const item = document.createElement('div');
+        item.classList.add('autocomplete-item');
+        item.textContent = result.product_name;
+
+        // Handle click event on autocomplete item
+        item.addEventListener('click', () => {
+            searchInput.value = result.product_name;
+            autocompleteResults.style.display = 'none';
+            
+            // Call your custom function and pass the code as an argument
+            handleAutocompleteClick(result.code);
+        });
+
+        autocompleteResults.appendChild(item);
+    });
+
+    if (results.length > 0) {
+        autocompleteResults.style.display = 'block';
+    } else {
+        autocompleteResults.style.display = 'none';
+    }
+}
+
+// Event listener for input changes
+searchInput.addEventListener('input', async () => {
+    const query = searchInput.value.trim();
+
+    if (query.length >= 3) { // Adjust this threshold as needed
+        const results = await getAutocompleteResults(query);
+        showAutocompleteResults(results);
+    } else {
+        autocompleteResults.style.display = 'none';
+    }
+});
+
+// Close autocomplete results when clicking outside the container
+document.addEventListener('click', (event) => {
+    if (!searchInput.contains(event.target)) {
+        autocompleteResults.style.display = 'none';
+    }
+});
+
+// Your custom function to handle autocomplete result click
+function handleAutocompleteClick(code) {
+    // Implement your logic here, using the 'code' parameter.
+    console.log('Clicked on item with code:', code);
+    // You can perform further actions based on the 'code' value.
+    window.location.href = 'product.html?token='+code;
+}
+
+</script>
+
                     <h2 style="padding-top: 0px;font-size: 40px;margin-top: 50px;">U.S. food waste contributes to <strong>172 million</strong> metric tons of carbon dioxide each year</h2>
                     <p class="w-lg-50" style="font-size: 24px;">We can help!</p>
                 </div>
@@ -86,8 +228,10 @@
         </div>
     </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdn.reflowhq.com/v2/toolkit.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
+    <script src="assets/js/Page-Loader-pageloader.js"></script>
+    <script src="assets/js/script.js"></script>
     <script src="assets/js/startup-modern.js"></script>
 </body>
 

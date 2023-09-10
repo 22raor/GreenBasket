@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Pricing - GreenBasket</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/Hero-Carousel-images.css">
+    <link rel="stylesheet" href="assets/css/Loading-Page-Animation-Style-styles.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="assets/css/Page-Loader.css">
+</head>
+
+<body><script>
+    $('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
+$(window).on('load', function(){
+  // setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+});
+    
+    
+function removeLoader(){
+    $( "#loadingDiv" ).fadeOut(500, function() {
+      // fadeOut complete. Remove the loading div
+      $( "#loadingDiv" ).remove(); //makes page more lightweight 
+  });  
+}
+    
+const queryString = window.location.search;
+console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    
+ token = urlParams.get('token')
+data = fetch(`https://green-basket-api.vercel.app/productPage/${token}`).then(response => response.json())
+.then(res => {
+     console.log("got response")
+    console.log(res);
+    res = res['res']
+    $('#prod-title').text(res['name'])
+    $('#prod-code').text(token)
+    
+    $('#prod-ecoscore').text("EcoScore: " + res['score'])
+    
+    $('#prod-image').attr('src',res['image'])
+    
+    loadPieChart(parseInt(res['score']));
+    
+    
+removeLoader();
+
+})
+ 
+// print(data)
+function loadPieChart(score) {
+    
+     ecograph(score)
+    
+}
+    
+     function ecograph(ecoscore){
+            var xValues = ["", "Ecoscore"]; //product in basket
+            var ecoscore=ecoscore;
+            var blankpart=100-ecoscore;
+            var yValues = [blankpart, ecoscore];//ecoscore of 
+            var barColors
+            if (ecoscore<30){
+                barColors = [
+                "#5A5A5A",
+                "#e10000"
+                ];
+            }
+            else if(ecoscore>= 30&& ecoscore<60){
+                barColors = [
+                "#5A5A5A",
+                "f9a01e",
+                ];
+            }
+            else{
+                barColors = [
+                "#5A5A5A",
+                "#97b24c"
+                ];
+            }
+            var ecotext=ecoscore+1
+            ecotext=ecotext-1
+        
+
+        var doughnutLabel= {
+            id: 'doughnutLabel',
+            beforeDatasetsDraw(chart,args, pluginOptions){
+                const{ctx,data}=chart;
+                ctx.save();
+                const xCoor = chart.getDatasetMeta(0).data[0].x;
+                const yCoor = chart.getDatasetMeta(0).data[0].y;
+                ctx.font='bold 30px sans-serif';
+                ctx.fillStyle= 'rgba(54, 162, 255, 1)';
+                ctx.textAlign = 'center';
+                ctx.Baseline='middle';
+                ctx.fillText(ecotext, xCoor,yCoor);
+            }
+        }
+        //config 
+        const config = {
+            type: 'doughnut',
+            data:[50,50,50],
+            options: {
+
+            },
+            //plugins: [doughnutLabel]
+        }
+        //render block
+        const ctx = document.getElementById('myChart');
+
+        const myChart=new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: '# of Votes',
+                    backgroundColor: barColors,
+                    data: yValues,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                
+            },
+            plugins: [doughnutLabel]
+        });
+    }
+        
+   
+    
+    
+</script>
+
+<style>
+          .loader,
+        .loader:after {
+            border-radius: 50%;
+            width: 10em;
+            height: 10em;
+        }
+        .loader {            
+            margin: 60px auto;
+            font-size: 10px;
+            position: relative;
+            text-indent: -9999em;
+            border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-left: 1.1em solid #ffffff;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: load8 1.1s infinite linear;
+            animation: load8 1.1s infinite linear;
+        }
+        @-webkit-keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        #loadingDiv {
+            position:absolute;
+              display: flex;
+      justify-content: center;
+      align-items: center;
+            top:0;
+            left:0;
+            z-index:100;
+            width:100%;
+            height:100%;
+            background-color:#000;
+        }
+    
+</style>
+    <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
+            <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
+                <ul class="navbar-nav mx-auto"></ul><a href="#"></a>
+            </div><a class="btn btn-primary shadow" role="button" onclick="login()" style="background: #7f9107;border-color: #7f9107;">Log In</a>
+ 
+<!--     <script src="./script.js"></script> -->
+
+        </div>
+    </nav>
+    <section class="py-5 mt-5" style="height: 1200px;background: #7f9107;">
+        <div class="container py-4 py-xl-5">
+            <div class="card">
+                <div class="card-body" style="background: var(--bs-light);padding-left: 36px;padding-right: 44px;">
+                    <h1 class="card-title" id="prod-title" style="font-size: 30;">Product Name</h1>
+                    <h5 class="text-muted card-subtitle mb-2" id="prod-code" style="margin-bottom: 56px;padding-bottom: 0px;padding-top: 0px;font-size: 20;">Item Code</h5>
+                    <div style="padding-bottom: 64px;margin-bottom: -60px;"><h2 ><strong>
+    <p id="prod-ecoscore">
+        EcoScore 1</p></strong></h2>
+                        <div class="row">
+                            <div class="col"><img id="prod-image" class="fit-cover" style="height: 300px;padding-top: 0px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 0px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="372" height="300"></div>
+                            <div class="col">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(54, 162, 235, 1);
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(54, 162, 235, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 700px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(54, 162, 235, 1);
+        background: green;
+      }
+    </style>
+
+<div>
+<!--     <div class="chartCard">
+      <div class="chartBox"> -->
+        <canvas id="myChart"></canvas>
+<!--       </div>
+    </div> -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+</div></div>
+                        </div>
+                    </div>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <header></header>
+                </div>
+            </div>
+            <div></div>
+            <header></header>
+            <header></header>
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                <div class="col">
+                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                        <div class="card-body p-4" style="background: var(--bs-light);">
+                            <p class="text-primary card-text mb-0">Item Code</p>
+                            <h3 class="card-title">Alternative 1</h3>
+                            <p class="card-text"></p>
+                            <div class="d-flex">
+                                <div>
+                                    <p class="fw-bold mb-0"></p>
+                                    <p class="text-muted mb-0"></p>
+                                </div>
+                            </div>
+                            <h3><strong>Alt ES 1</strong></h3>
+                            <p class="text-primary card-text mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                        <div class="card-body p-4" style="background: var(--bs-light);">
+                            <p class="text-primary card-text mb-0">Item Code</p>
+                            <h3 class="card-title">Alternative 2</h3>
+                            <p class="card-text"></p>
+                            <div class="d-flex"></div>
+                            <h3><strong>Alt ES 2</strong></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                        <div class="card-body p-4" style="background: var(--bs-light);">
+                            <p class="text-primary card-text mb-0">Item Code</p>
+                            <h3 class="card-title">Alternative 3</h3>
+                            <p class="card-text"></p>
+                            <h3><strong>Alt ES 3</strong></h3>
+                            <div class="d-flex"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;">
+        <div class="container py-4 py-lg-5" style="margin-top: 0px;height: 100px;">
+            <p class="mb-0">Copyright © 2023 GreenBasket</p>
+            <div class="text-muted d-flex justify-content-between align-items-center pt-3"></div>
+        </div>
+    </footer>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
+    <script src="assets/js/Page-Loader-pageloader.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/startup-modern.js"></script>
+</body>
+
+</html>
