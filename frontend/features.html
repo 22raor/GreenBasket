@@ -23,50 +23,137 @@
 <script src="./script.js"></script>
 </head>
 
-<body>
+<body><div>Custom Code</div>
+
+<script> 
+window.onload = function() {
+    function displayCartItems() {
+    // Retrieve the cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart'));
+
+    // Get the container element where you want to display the cart items
+    const cartContainer = document.getElementById('cart-container');
+
+    // Check if the cart is empty
+    if (!cart || cart.length === 0) {
+        // Display a message or take appropriate action for an empty cart
+        cartContainer.innerHTML = '<p>Your cart is empty</p>';
+        return;
+    }
+
+    // Loop through the cart and generate HTML for each product card
+    cart.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('col-xl-6', 'mb-4'); // Adjust classes as needed
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+        cardBody.style.background = '#fcf7e5';
+
+        const cardTitle = document.createElement('h4');
+        cardTitle.classList.add('card-title');
+        cardTitle.textContent = product.name; // Display product name
+
+        const cardSubtitle = document.createElement('h6');
+        cardSubtitle.classList.add('text-muted', 'card-subtitle', 'mb-2');
+        cardSubtitle.textContent = 'Code'; // Replace with actual subtitle if needed
+
+        const cardText = document.createElement('p');
+        cardText.classList.add('card-text');
+        cardText.textContent = `EcoScore: ${product.ecoscore}`; // Display EcoScore
+
+        // You can also add an image element if you have the image URL
+        const productImage = document.createElement('img');
+        productImage.src = product.image_url;
+        productImage.alt = product.name;
+        
+        // Append elements to the product card
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardSubtitle);
+        cardBody.appendChild(cardText);
+
+        // Append the product card to the cart container
+        productCard.appendChild(cardBody);
+        cartContainer.appendChild(productCard);
+    });
+}
+
+// Call the displayCartItems function to display the cart contents on the cart page
+displayCartItems();
+};
+    
+</script>
     <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
             <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
-                <ul class="navbar-nav mx-auto"></ul><a href="#"></a>
+                <ul class="navbar-nav mx-auto"></ul><a href="#"></a><a href="features.html" style="padding-right: 40px;">View Basket</a>
             </div><a class="btn btn-primary shadow" role="button" id="loginbutton" onclick="login()" style="background: #7f9107;border-color: #7f9107;">Log In</a>
  
     <script src="./script.js"></script>
 
         </div>
-    </nav>
-    <section class="py-5 mt-5" style="background: #7f9107;height: 800px;">
-        <div class="container py-4 py-xl-5">
-            <h1 style="text-align: center;color: var(--bs-light);height: 70px;"><strong>Your Basket</strong></h1>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-body" style="background: #fcf7e5;">
-                            <h4 class="card-title">Product 1</h4>
-                            <h6 class="text-muted card-subtitle mb-2">Code</h6>
-                            <p class="card-text">EcoScore</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body" style="background: #fcf7e5;">
-                            <h4 class="card-title">Product 2</h4>
-                            <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-                            <p class="card-text">EcoScore</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body" style="background: #fcf7e5;">
-                            <h4 class="card-title">Product 3</h4>
-                            <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-                            <p class="card-text">EcoScore</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div style="background: #fcf7e5;"><canvas data-bss-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;January&quot;,&quot;February&quot;,&quot;March&quot;,&quot;April&quot;,&quot;May&quot;,&quot;June&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Revenue&quot;,&quot;backgroundColor&quot;:&quot;#4e73df&quot;,&quot;borderColor&quot;:&quot;#4e73df&quot;,&quot;data&quot;:[&quot;4500&quot;,&quot;5300&quot;,&quot;6250&quot;,&quot;7800&quot;,&quot;9800&quot;,&quot;15000&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;bold&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}],&quot;yAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}]}}}"></canvas></div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </nav><div id = "cart-container"> </div>
+
+<div>Custom Code</div>
+
+<script> 
+window.onload = function() {
+    function displayCartItems() {
+    // Retrieve the cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart'));
+
+    // Get the container element where you want to display the cart items
+    const cartContainer = document.getElementById('cart-container');
+
+    // Check if the cart is empty
+    if (!cart || cart.length === 0) {
+        // Display a message or take appropriate action for an empty cart
+        cartContainer.innerHTML = '<p>Your cart is empty</p>';
+        return;
+    }
+
+    // Loop through the cart and generate HTML for each product card
+    cart.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('col-xl-6', 'mb-4'); // Adjust classes as needed
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+        cardBody.style.background = '#fcf7e5';
+
+        const cardTitle = document.createElement('h4');
+        cardTitle.classList.add('card-title');
+        cardTitle.textContent = product.name; // Display product name
+
+        const cardSubtitle = document.createElement('h6');
+        cardSubtitle.classList.add('text-muted', 'card-subtitle', 'mb-2');
+        cardSubtitle.textContent = 'Code'; // Replace with actual subtitle if needed
+
+        const cardText = document.createElement('p');
+        cardText.classList.add('card-text');
+        cardText.textContent = `EcoScore: ${product.ecoscore}`; // Display EcoScore
+
+        // You can also add an image element if you have the image URL
+        const productImage = document.createElement('img');
+        productImage.src = product.image_url;
+        productImage.alt = product.name;
+        
+        // Append elements to the product card
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardSubtitle);
+        cardBody.appendChild(cardText);
+
+        // Append the product card to the cart container
+        productCard.appendChild(cardBody);
+        cartContainer.appendChild(productCard);
+    });
+}
+
+// Call the displayCartItems function to display the cart contents on the cart page
+displayCartItems();
+};
+    
+</script>
     <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;">
         <div class="container py-4 py-lg-5" style="margin-top: 0px;height: 100px;">
             <p class="mb-0">Copyright © 2023 GreenBasket</p>
@@ -74,7 +161,6 @@
         </div>
     </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
     <script src="assets/js/Page-Loader-pageloader.js"></script>

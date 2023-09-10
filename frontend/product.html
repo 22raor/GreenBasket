@@ -37,6 +37,9 @@ function removeLoader(){
   });  
 }
     
+let currProduct;
+    let currToken;
+    
 const queryString = window.location.search;
 console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
@@ -50,12 +53,14 @@ data = fetch(`https://green-basket-api.vercel.app/productPage/${token}`).then(re
     $('#prod-title').text(res['name'])
     $('#prod-code').text(token)
     
+    
     $('#prod-ecoscore').text("EcoScore: " + res['score'])
     
     $('#prod-image').attr('src',res['image'])
     
     loadPieChart(parseInt(res['score']));
-    
+    currProduct = res
+    currProduct['token'] = token
     
 removeLoader();
 
@@ -204,7 +209,7 @@ function loadPieChart(score) {
     <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span style="margin-left: 10px;padding-left: 3px;"><img src="assets/img/illustrations/Untitled%20design.png" style="width: 50px;padding-right: 0px;margin-right: 13px;padding-bottom: 7px;">GreenBasket</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a href="integrations.html">About Us</a>
             <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: -30px;width: 450px;">
-                <ul class="navbar-nav mx-auto"></ul><a href="#"></a>
+                <ul class="navbar-nav mx-auto"></ul><a href="#"></a><a href="features.html" style="padding-right: 40px;">View Basket</a>
             </div><a class="btn btn-primary shadow" role="button" id="loginbutton" onclick="login()" style="background: #7f9107;border-color: #7f9107;">Log In</a>
  
     <script src="./script.js"></script>
@@ -221,7 +226,39 @@ function loadPieChart(score) {
     <p id="prod-ecoscore">
         EcoScore 1</p></strong></h2>
                         <div class="row">
-                            <div class="col"><img id="prod-image" class="fit-cover" style="height: 300px;padding-top: 0px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 0px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="372" height="300"></div>
+                            <div class="col"><img id="prod-image" class="fit-cover" style="height: 300px;padding-top: 0px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 0px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="372" height="300"><button class="btn btn-primary" onclick = "addToCart(currProduct)" type="button">Add to Basket</button>
+
+<script> 
+    // Define the product object structure
+function createProductObject(name, id, image_url, ecoscore) {
+    return {
+        name: name,
+        id: id,
+        image_url: image_url,
+        ecoscore: ecoscore
+    };
+}
+
+// Function to add a product to the cart
+function addToCart(currProduct) {
+    // Create the product object
+    const product = createProductObject(currProduct["name"], currProduct["token"], currProduct["image"], currProduct["score"]);
+
+    // Retrieve the current cart from localStorage or initialize it if it doesn't exist
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Add the product to the cart array
+    cart.push(product);
+
+    // Store the updated cart back in localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Optionally, you can provide feedback to the user, like displaying a confirmation message
+    alert('Product added to cart!');
+}
+
+
+</script></div>
                             <div class="col">
     <style>
       * {
