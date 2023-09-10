@@ -151,7 +151,12 @@ $('#Average').html(`
         
          let avg = (count/number+0.0);
    avg = Math.round(avg * 100) / 100
-     $('#Average').text(`Your average EcoScore is`+ avg)   
+    $('#Average').html(`
+  <div style="text-align: center; margin-left: -80px; margin-right: 70px;">
+    <b>Your average EcoScore is: </b><br>
+    <span style="font-size: 90px; ">${avg}</span>
+  </div>
+`); 
     
 }
 
