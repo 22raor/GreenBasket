@@ -1,4 +1,4 @@
-# hacketton
+# GreenBasket
 
 ## Inspiration
 As we buy food on an everyday basis, we rarely stop and think about where it came from before we found it on our grocery shelves. These products are made from various ingredients sourced from all over the world, and the practices used to produce and ship them can be very detrimental on the environment. We realized that we as consumers need to be more conscious in our food choices in order to protect the environment. 
