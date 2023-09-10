@@ -1,6 +1,6 @@
 # GreenBasket
 
-![]([https://github.com/GreenBasket/giphy.gif](https://github.com/22raor/GreenBasket/blob/main/giphy.gif?raw=true))
+![]([https://github.com/GreenBasket/giphy.gif](https://github.com/22raor/GreenBasket/blob/main/giphy.gif))
 
 
 ## Inspiration
