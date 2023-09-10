@@ -53,8 +53,9 @@ const configureClient = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
   
     //change text on button to signed in instead of log in
-
+    console.log("Bitch we already logged in")
     // document.getElementById("btn-logout").disabled = !isAuthenticated;
+     $('#loginbutton').text('Log Out')
     // document.getElementById("btn-login").disabled = isAuthenticated;
   };
 
@@ -66,3 +67,11 @@ const configureClient = async () => {
       }
     });
   };
+
+const logout = () => {
+  auth0Client.logout({
+    logoutParams: {
+      returnTo: "https://green-basket.vercel.app"
+    }
+  });
+};
