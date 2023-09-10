@@ -70,22 +70,25 @@ def giveProdGetInfo(id: str):
     imageURL = prod["product"]["image_url"]
 
 
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_agriculture"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_consumption"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_distribution"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_packaging"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_processing"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_total"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["co2_transportation"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_agriculture"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_consumption"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_distribution"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_packaging"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_processing"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_total"]
-    prod["product"]["ecoscore_data"]["agribalyse"]["ef_transportation"]
+    co2_agriculture = prod["product"]["ecoscore_data"]["agribalyse"]["co2_agriculture"]
+    co2_consumption = prod["product"]["ecoscore_data"]["agribalyse"]["co2_consumption"]
+    co2_distribution = prod["product"]["ecoscore_data"]["agribalyse"]["co2_distribution"]
+    co2_packaging = prod["product"]["ecoscore_data"]["agribalyse"]["co2_packaging"]
+    co2_processing = prod["product"]["ecoscore_data"]["agribalyse"]["co2_processing"]
+    co2_total = prod["product"]["ecoscore_data"]["agribalyse"]["co2_total"]
+    co2_transportation = prod["product"]["ecoscore_data"]["agribalyse"]["co2_transportation"]
+    ef_agriculture = prod["product"]["ecoscore_data"]["agribalyse"]["ef_agriculture"]
+    ef_consumption = prod["product"]["ecoscore_data"]["agribalyse"]["ef_consumption"]
+    ef_distribution = prod["product"]["ecoscore_data"]["agribalyse"]["ef_distribution"]
+    ef_packaging = prod["product"]["ecoscore_data"]["agribalyse"]["ef_packaging"]
+    ef_processing = prod["product"]["ecoscore_data"]["agribalyse"]["ef_processing"]
+    ef_total = prod["product"]["ecoscore_data"]["agribalyse"]["ef_total"]
+    ef_transportation = prod["product"]["ecoscore_data"]["agribalyse"]["ef_transportation"]
 
-    ret = {"name": name, "score": ecoscore, "alts": listOfAlternatives, "image": imageURL}
+    ret = {"name": name, "score": ecoscore, "alts": listOfAlternatives, "image": imageURL, "co2_agriculture": co2_agriculture, "co2_consumption": co2_consumption,
+           "co2_distribution": co2_distribution, "co2_packaging": co2_packaging, "co2_processing": co2_processing, "co2_total": co2_total, "co2_transportation": co2_transportation,
+           "ef_agriculture": ef_agriculture, "ef_consumption": ef_consumption, "ef_distribution": ef_distribution, "ef_packaging": ef_packaging, "ef_processing": ef_processing,
+           "ef_total": ef_total, "ef_transportation": ef_transportation}
 
     return {"res": ret}
 
