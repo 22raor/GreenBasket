@@ -83,7 +83,7 @@ def getAlternatives(category):
             'fields': 'code,product_name,ecoscore_score',
         }
 
-        response = requests.get('https://us.openfoodfacts.net/api/v2/search', params=params, headers=headers)
+        response = requests.get('https://us.openfoodfacts.org/api/v2/search', params=params, headers=headers)
 
         return response
 
