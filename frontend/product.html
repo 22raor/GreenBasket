@@ -38,6 +38,7 @@ function removeLoader(){
 }
     
 let currProduct;
+    let currAlts = []
     let currToken;
     
 const queryString = window.location.search;
@@ -50,30 +51,68 @@ data = fetch(`https://green-basket-api.vercel.app/productPage/${token}`).then(re
      console.log("got response")
     console.log(res);
     res = res['res']
+    
+     $('#prod-image').attr('src',res['image'])
     $('#prod-title').text(res['name'])
     $('#prod-code').text(token)
     
     
     $('#prod-ecoscore').text("EcoScore: " + res['score'])
     
-    $('#prod-image').attr('src',res['image'])
+   
+    
+    for(let i = 1; i < 4; i++) {
+        $('#altname'+i).text( res['alts'][i]['product_name'])
+        $('#altscore'+i).text(res['alts'][i]['ecoscore_score'])
+         $('#altcode'+i).text( res['alts'][i]['code'])
+        currAlts.push( res['alts'][i]['code'])
+        
+    }
+    
+    
+    
+       currProduct = res
+    currProduct['token'] = token
     
     loadPieChart(parseInt(res['score']));
-    currProduct = res
-    currProduct['token'] = token
+ 
     
 removeLoader();
 
 })
+    
+    function gimme(num) {
+        code = currAlts[num - 1]
+        
+        window.location= "/product.html?token="+code;
+        
+    }
  
 // print(data)
 function loadPieChart(score) {
     
-     ecograph(score)
+     getChart(
+        currProduct['co2_agriculture'],
+         currProduct['co2_processing'],
+         currProduct['co2_packaging'],
+         currProduct['co2_transportation'],
+         currProduct['co2_distribution'],
+         currProduct['co2_consumption'],
+         
+         
+         
+       
+         currProduct['score'],
+         
+     
+     
+     )
+    
+    
     
 }
     
-     function ecograph(ecoscore){
+     // function ecograph(ecoscore){
             var xValues = ["", "Ecoscore"]; //product in basket
             var ecoscore=ecoscore;
             var blankpart=100-ecoscore;
@@ -143,9 +182,70 @@ function loadPieChart(score) {
             },
             plugins: [doughnutLabel]
         });
-    }
+    
+    //}
         
-   
+       function getChart(agriculture, processing, packaging, transportation, distribution, consumption, ecoscore) {
+                var xValues = ["Agriculture", "Processing", "Packaging", "Transportation", "Distribution", "Consumption"]; // Product categories
+                var agriculturePercent = agriculture;
+                var processingPercent = processing;
+                var packagingPercent= packaging;
+                var transportationPercent = transportation;
+                var distributionPercent = distribution;
+                var consumptionPercent = consumption;
+
+                var yValues = [agriculturePercent, processingPercent, packagingPercent, transportationPercent, distributionPercent, consumptionPercent]; // Eco-scores
+
+                var productName = "Nutella";
+                var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145"];
+
+                new Chart("myChart", {
+                    type: "doughnut",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: "EcoScore Distribution for " + productName
+                        }
+                    }
+                });
+
+                const letterGrades = [
+                    { minScore: 87.5, maxScore: 100, grade: 'A+' },
+                    { minScore: 75, maxScore: 87.49, grade: 'A-' },
+                    { minScore: 62.5, maxScore: 74.99, grade: 'B+' },
+                    { minScore: 50, maxScore: 62.49, grade: 'B-' },
+                    { minScore: 37.5, maxScore: 49.99, grade: 'C+' },
+                    { minScore: 25, maxScore: 37.49, grade: 'C-' },
+                    { minScore: 12.5, maxScore: 24.99, grade: 'D+' },
+                    { minScore: 0, maxScore: 12.49, grade: 'D-' },
+
+                    ];
+
+                    function getLetterGrade(score) {
+                        for (const gradeData of letterGrades) {
+                            if (score >= gradeData.minScore && score <= gradeData.maxScore) {
+                            return gradeData.grade;
+                            }
+                        }
+                        return 'Invalid'; // Handle scores outside the defined ranges
+                        }
+
+                // Update the center text to "40"
+                document.getElementById("center-text").textContent = getLetterGrade(ecoscore);
+           
+           
+              
+           
+                    }
+
+        
     
     
 </script>
@@ -291,12 +391,36 @@ function addToCart(currProduct) {
         border: solid 3px rgba(54, 162, 235, 1);
         background: green;
       }
+        
+            .centered-overlay {
+         position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+/*       background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for overlay effect */ */
+/*       color: white; /* Text color for the overlay content */ */
+      z-index: 1; /* Ensure the overlay is on top of other content */
+    }
     </style>
 
 <div>
 <!--     <div class="chartCard">
       <div class="chartBox"> -->
-        <canvas id="myChart"></canvas>
+    
+    <div id="centry">
+        <canvas id="myChart">
+    <div id="center-text" style="font-family: 'Raleway', sans-serif" class="centered-overlay"></div>
+ 
+    
+    </canvas>
+        
+    </div>
+    
+    
+    
+    
+    
+           
 <!--       </div>
     </div> -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
@@ -321,10 +445,10 @@ function addToCart(currProduct) {
             <header></header>
             <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                 <div class="col">
-                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                    <div class="card">
                         <div class="card-body p-4" style="background: var(--bs-light);">
-                            <p class="text-primary card-text mb-0">Item Code</p>
-                            <h3 class="card-title">Alternative 1</h3>
+                            <p class="text-primary card-text mb-0" id="altcode1">Item Code</p>
+                            <h3 class="card-title" id="altname1">Alternative 1</h3>
                             <p class="card-text"></p>
                             <div class="d-flex">
                                 <div>
@@ -332,42 +456,37 @@ function addToCart(currProduct) {
                                     <p class="text-muted mb-0"></p>
                                 </div>
                             </div>
-                            <h3><strong>Alt ES 1</strong></h3>
-                            <p class="text-primary card-text mb-0"></p>
+                            <h3 id="altscore1"><strong>Alt ES 1</strong></h3>
+                            <p class="text-primary card-text mb-0"></p><button class="btn btn-primary" id="visit1" type="button" onclick="gimme(1)">Visit Product</button>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                    <div class="card">
                         <div class="card-body p-4" style="background: var(--bs-light);">
-                            <p class="text-primary card-text mb-0">Item Code</p>
-                            <h3 class="card-title">Alternative 2</h3>
+                            <p class="text-primary card-text mb-0" id="altcode2">Item Code</p>
+                            <h3 class="card-title" id="altname2">Alternative 2</h3>
                             <p class="card-text"></p>
                             <div class="d-flex"></div>
-                            <h3><strong>Alt ES 2</strong></h3>
+                            <h3 id="altscore2"><strong>Alt ES 2</strong></h3><button class="btn btn-primary" id="visit2" type="button" onclick="gimme(2)">Visit Product</button>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                    <div class="card">
                         <div class="card-body p-4" style="background: var(--bs-light);">
-                            <p class="text-primary card-text mb-0">Item Code</p>
-                            <h3 class="card-title">Alternative 3</h3>
+                            <p class="text-primary card-text mb-0" id="altcode3">Item Code</p>
+                            <h3 class="card-title" id="altname3">Alternative 3</h3>
                             <p class="card-text"></p>
-                            <h3><strong>Alt ES 3</strong></h3>
-                            <div class="d-flex"></div>
+                            <h3 id="altscore3"><strong>Alt ES 3</strong></h3>
+                            <div class="d-flex"></div><button class="btn btn-primary" id="visit3" type="button" onclick="gimme(3)">Visit Product</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;">
-        <div class="container py-4 py-lg-5" style="margin-top: 0px;height: 100px;">
-            <p class="mb-0">Copyright © 2023 GreenBasket</p>
-            <div class="text-muted d-flex justify-content-between align-items-center pt-3"></div>
-        </div>
-    </footer>
+    <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;"></footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>

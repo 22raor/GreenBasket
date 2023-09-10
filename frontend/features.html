@@ -23,10 +23,16 @@
 <script src="./script.js"></script>
 </head>
 
-<body><div>Custom Code</div>
+<body>
 
 <script> 
-window.onload = function() {
+    
+    let count =0;
+    let number = 0; 
+    
+$(window).on('load', function(){
+  // setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+
     function displayCartItems() {
     // Retrieve the cart data from localStorage
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -56,12 +62,14 @@ window.onload = function() {
 
         const cardSubtitle = document.createElement('h6');
         cardSubtitle.classList.add('text-muted', 'card-subtitle', 'mb-2');
-        cardSubtitle.textContent = 'Code'; // Replace with actual subtitle if needed
+        cardSubtitle.textContent = product.id; // Replace with actual subtitle if needed
 
         const cardText = document.createElement('p');
         cardText.classList.add('card-text');
         cardText.textContent = `EcoScore: ${product.ecoscore}`; // Display EcoScore
-
+    count+=product.ecoscore;
+        number++;
+        
         // You can also add an image element if you have the image URL
         const productImage = document.createElement('img');
         productImage.src = product.image_url;
@@ -79,8 +87,17 @@ window.onload = function() {
 }
 
 // Call the displayCartItems function to display the cart contents on the cart page
+    
+   
+
 displayCartItems();
-};
+     $('#Average').text(`Your average EcoScore is `+ (count/number+0.0))   
+    
+    
+    
+    
+    
+});
     
 </script>
     <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
@@ -92,12 +109,19 @@ displayCartItems();
     <script src="./script.js"></script>
 
         </div>
-    </nav><div id = "cart-container"> </div>
+    </nav>
+    <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;"></footer>
+    <div class="row d-md-flex flex-row justify-content-md-center" style="padding-bottom: 0px;padding-top: 104px;">
+        <div class="col" style="padding-top: 54px;margin-left: 36px;"><div id = "cart-container"> </div>
 
-<div>Custom Code</div>
 
 <script> 
+    let count;
+    let number;
+    
+    
 window.onload = function() {
+    console.log("onload started")
     function displayCartItems() {
     // Retrieve the cart data from localStorage
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -113,7 +137,10 @@ window.onload = function() {
     }
 
     // Loop through the cart and generate HTML for each product card
+         count = 0;
+         number = 0;
     cart.forEach(product => {
+        
         const productCard = document.createElement('div');
         productCard.classList.add('col-xl-6', 'mb-4'); // Adjust classes as needed
 
@@ -132,7 +159,9 @@ window.onload = function() {
         const cardText = document.createElement('p');
         cardText.classList.add('card-text');
         cardText.textContent = `EcoScore: ${product.ecoscore}`; // Display EcoScore
-
+        count+=product.ecoscore;
+        number++;
+        console.log("adding to count")
         // You can also add an image element if you have the image URL
         const productImage = document.createElement('img');
         productImage.src = product.image_url;
@@ -147,19 +176,23 @@ window.onload = function() {
         productCard.appendChild(cardBody);
         cartContainer.appendChild(productCard);
     });
+        
+        
 }
 
 // Call the displayCartItems function to display the cart contents on the cart page
+$('#Average').text(`Your average EcoScore is `+ (count/number))   
+
 displayCartItems();
+    
+    
 };
     
-</script>
-    <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;">
-        <div class="container py-4 py-lg-5" style="margin-top: 0px;height: 100px;">
-            <p class="mb-0">Copyright © 2023 GreenBasket</p>
-            <div class="text-muted d-flex justify-content-between align-items-center pt-3"></div>
+</script></div>
+        <div class="col" style="margin-top: 82px;">
+            <h1 id="Average">Heading</h1>
         </div>
-    </footer>
+    </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Loading-Page-Animation-Style-onload.js"></script>
