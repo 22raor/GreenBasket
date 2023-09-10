@@ -19,6 +19,8 @@ const configureClient = async () => {
 
   // ..
 
+let currUser;
+
   window.onload = async () => {
 
     // .. code ommited for brevity
@@ -43,8 +45,8 @@ const configureClient = async () => {
         
     
         let user = await auth0Client.getUser();
-        
-        updateUI(user);
+        currUser = user;
+        updateUI();
 
 
         
@@ -56,14 +58,14 @@ const configureClient = async () => {
   
   
   // NEW
-  const updateUI = async (user) => {
+  const updateUI = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
   
     //change text on button to signed in instead of log in
     console.log("Bitch we already logged in")
     // document.getElementById("btn-logout").disabled = !isAuthenticated;
      if(isAuthenticated){
-         $('#loginbutton').text("Hi " + user['given_name']+"!")
+         $('#loginbutton').text("Hi " + currUser['given_name']+"!")
          
        $('#loginbutton').attr("onclick","logout()")
      }
