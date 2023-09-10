@@ -68,7 +68,8 @@ let currUser;
     // document.getElementById("btn-logout").disabled = !isAuthenticated;
      if(isAuthenticated){
           console.log("Bitch we already logged in")
-         $('#loginbutton').text("Hi " + currUser['given_name']+"!")
+         let user = await auth0Client.getUser();
+         $('#loginbutton').text("Hi " + user['given_name']+"!")
          
        $('#loginbutton').attr("onclick","logout()")
      }
