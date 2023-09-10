@@ -9,6 +9,14 @@
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js">
   
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Features - GreenBasket</title>
@@ -29,11 +37,9 @@
     
     let count =0;
     let number = 0; 
-    
-$(window).on('load', function(){
-  // setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
-
     function displayCartItems() {
+        count = 0;
+        number = 0;
     // Retrieve the cart data from localStorage
     const cart = JSON.parse(localStorage.getItem('cart'));
 
@@ -48,56 +54,193 @@ $(window).on('load', function(){
     }
 
     // Loop through the cart and generate HTML for each product card
-    cart.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('col-xl-6', 'mb-4'); // Adjust classes as needed
-
-        const cardBody = document.createElement('div');
-        cardBody.classList.add('card-body');
-        cardBody.style.background = '#fcf7e5';
-
-        const cardTitle = document.createElement('h4');
-        cardTitle.classList.add('card-title');
-        cardTitle.textContent = product.name; // Display product name
-
-        const cardSubtitle = document.createElement('h6');
-        cardSubtitle.classList.add('text-muted', 'card-subtitle', 'mb-2');
-        cardSubtitle.textContent = product.id; // Replace with actual subtitle if needed
-
-        const cardText = document.createElement('p');
-        cardText.classList.add('card-text');
-        cardText.textContent = `EcoScore: ${product.ecoscore}`; // Display EcoScore
+        cartContainer.innerHTML="";
+        
+    cart.forEach(product => {// Display EcoScore
     count+=product.ecoscore;
         number++;
         
-        // You can also add an image element if you have the image URL
-        const productImage = document.createElement('img');
-        productImage.src = product.image_url;
-        productImage.alt = product.name;
-        
-        // Append elements to the product card
-        cardBody.appendChild(cardTitle);
-        cardBody.appendChild(cardSubtitle);
-        cardBody.appendChild(cardText);
+        $('#cart-container').append(
+        `
+            
+              <div class="card">
+    <div class="content">
+      <div class="header">${product.name}</div>
+      <div class="description">
+        This alternative has a ecoscore of <strong> ${product.ecoscore} </strong>.
+      </div>
+  <div class="center aligned author">
+      ID: ${product.id}
+    </div>
+    </div>
+    
 
-        // Append the product card to the cart container
-        productCard.appendChild(cardBody);
-        cartContainer.appendChild(productCard);
+  <div class="extra content">
+  
+<div class="ui bottom attached button" onclick="deleto(${product.id})">
+      <i class="add icon"></i>
+      Delete From Basket
+    </div>
+  </div>
+  </div>
+            `
+        
+        )
+        
+      
     });
 }
+ 
+    
+    
+    
+$(window).on('load', function(){
+  // setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
 
+   
 // Call the displayCartItems function to display the cart contents on the cart page
     
    
 
 displayCartItems();
-     $('#Average').text(`Your average EcoScore is `+ (count/number+0.0))   
+    let avg = (count/number+0.0);
+   avg = Math.round(avg * 100) / 100
+     $('#Average').text(`Your average EcoScore is `+ avg)   
     
-    
+    basketgraph([60,40,50,40]);
     
     
     
 });
+    
+    
+    function deleto(id) {
+        id+="";
+        
+        
+        
+    // Retrieve the cart data from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let toRemove = -1;
+        // console.log(cart)
+        
+        let i = 0;
+        for(let prod of cart){
+            console.log(prod)
+            console.log(prod['id'] + " " + id)
+            if(prod.id.includes(id)) {
+                toRemove = i;
+                break;
+            }
+            i+=1;
+        }
+        // console.log(toRemove)
+        cart.splice(i,1)
+        // console.log(cart)
+    localStorage.setItem('cart', JSON.stringify(cart));
+        
+    // 
+        displayCartItems();
+        
+         let avg = (count/number+0.0);
+   avg = Math.round(avg * 100) / 100
+     $('#Average').text(`Your average EcoScore is `+ avg)   
+    
+}
+
+    
+     function basketgraph(basketscores, products){
+            
+            function calculateAverage(basketscores) {
+                // Check if the input is an empty array to avoid division by zero.
+                if (basketscores.length === 0) {
+                    return 0;
+                }
+
+                // Calculate the sum of all numbers in the array.
+                const sum = basketscores.reduce((acc, num) => acc + num, 0);
+
+                // Calculate the average.
+                const averagebasket = sum / basketscores.length;
+
+                return averagebasket;
+                }
+            var averagebasket=calculateAverage(basketscores) 
+            if (averagebasket<30){
+                barColors = [
+                "#d9d9d9",
+                "#e10000"
+                ];
+                lettercolors="#e10000"
+            }
+            else if(averagebasket>= 30&& averagebasket<60){
+                barColors = [
+                "#d9d9d9",
+                "f9a01e",
+                ];
+                lettercolors="#f9a01e"
+            }
+            else{
+                barColors = [
+                "#d9d9d9",
+                "#97b24c"];
+                lettercolors="#97b24c"
+            }
+            var ecotext=averagebasket+1
+            ecotext=ecotext-1
+            var blankpart=100-averagebasket;
+            var xValues = [products]; //products in basket
+            var basketscores=basketscores;
+            var yValues = [blankpart, averagebasket];//ecoscore of 
+            var barColors
+            var lettercolors
+
+        var doughnutLabel= {
+            id: 'doughnutLabel',
+            beforeDatasetsDraw(chart,args, pluginOptions){
+                const{ctx,data}=chart;
+                ctx.save();
+                const xCoor = chart.getDatasetMeta(0).data[0].x;
+                const yCoor = chart.getDatasetMeta(0).data[0].y;
+                ctx.font='bold 30px sans-serif';
+                ctx.fillStyle= lettercolors;
+                ctx.textAlign = 'center';
+                ctx.Baseline='middle';
+                ctx.fillText(ecotext, xCoor,yCoor);
+            }
+        }
+        
+        
+        //render block
+        xValues = ["", "Ecoscore"];
+        const ctx = document.getElementById('myChart2');
+
+
+        const myChart=new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: false,
+                datasets: [{
+                    label: false,
+                    backgroundColor: barColors,
+    
+                    data: yValues,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Your Average Ecoscore"
+                },
+                events: []
+            },
+            plugins: [doughnutLabel]
+        });
+        
+      }
+        
+
     
 </script>
     <nav class="navbar navbar-expand-md fixed-top navbar-shrink py-3 navbar-light" id="mainNav" style="background: #fcf7e5;height: 100px;">
@@ -112,85 +255,24 @@ displayCartItems();
     </nav>
     <footer style="background: var(--bs-light);padding-top: 0px;margin-top: -28px;"></footer>
     <div class="row d-md-flex flex-row justify-content-md-center" style="padding-bottom: 0px;padding-top: 104px;">
-        <div class="col" style="padding-top: 54px;margin-left: 36px;"><div id = "cart-container"> </div>
+        <div class="col" style="padding-top: 54px;margin-left: 36px;">
 
 
-<script> 
-    let count;
-    let number;
-    
-    
-window.onload = function() {
-    console.log("onload started")
-    function displayCartItems() {
-    // Retrieve the cart data from localStorage
-    const cart = JSON.parse(localStorage.getItem('cart'));
+<div id = "cart-container" class="ui cards"> 
 
-    // Get the container element where you want to display the cart items
-    const cartContainer = document.getElementById('cart-container');
 
-    // Check if the cart is empty
-    if (!cart || cart.length === 0) {
-        // Display a message or take appropriate action for an empty cart
-        cartContainer.innerHTML = '<p>Your cart is empty</p>';
-        return;
-    }
 
-    // Loop through the cart and generate HTML for each product card
-         count = 0;
-         number = 0;
-    cart.forEach(product => {
-        
-        const productCard = document.createElement('div');
-        productCard.classList.add('col-xl-6', 'mb-4'); // Adjust classes as needed
+</div>
 
-        const cardBody = document.createElement('div');
-        cardBody.classList.add('card-body');
-        cardBody.style.background = '#fcf7e5';
-
-        const cardTitle = document.createElement('h4');
-        cardTitle.classList.add('card-title');
-        cardTitle.textContent = product.name; // Display product name
-
-        const cardSubtitle = document.createElement('h6');
-        cardSubtitle.classList.add('text-muted', 'card-subtitle', 'mb-2');
-        cardSubtitle.textContent = 'Code'; // Replace with actual subtitle if needed
-
-        const cardText = document.createElement('p');
-        cardText.classList.add('card-text');
-        cardText.textContent = `EcoScore: ${product.ecoscore}`; // Display EcoScore
-        count+=product.ecoscore;
-        number++;
-        console.log("adding to count")
-        // You can also add an image element if you have the image URL
-        const productImage = document.createElement('img');
-        productImage.src = product.image_url;
-        productImage.alt = product.name;
-        
-        // Append elements to the product card
-        cardBody.appendChild(cardTitle);
-        cardBody.appendChild(cardSubtitle);
-        cardBody.appendChild(cardText);
-
-        // Append the product card to the cart container
-        productCard.appendChild(cardBody);
-        cartContainer.appendChild(productCard);
-    });
-        
-        
-}
-
-// Call the displayCartItems function to display the cart contents on the cart page
-$('#Average').text(`Your average EcoScore is `+ (count/number))   
-
-displayCartItems();
-    
-    
-};
-    
-</script></div>
+</div>
         <div class="col" style="margin-top: 82px;">
-            <h1 id="Average">Heading</h1>
+            <h1 id="Average">Heading</h1><div>
+<canvas id="myChart2"></canvas>
+
+</div>
+
+
+
         </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

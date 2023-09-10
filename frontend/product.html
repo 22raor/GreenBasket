@@ -9,6 +9,14 @@
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js">
   
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Pricing - GreenBasket</title>
@@ -326,8 +334,8 @@ function loadPieChart(score) {
     <p id="prod-ecoscore">
         EcoScore 1</p></strong></h2>
                         <div class="row">
-                            <div class="col"><img id="prod-image" class="fit-cover" style="height: 300px;padding-top: 0px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 0px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="372" height="300"><button class="btn btn-primary" onclick = "addToCart(currProduct)" type="button">Add to Basket</button>
-
+                            <div class="col"><img id="prod-image" class="fit-cover" style="height: 300px;padding-top: 0px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 0px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="372" height="300"><button class="btn btn-primary" onclick = "addToCart(currProduct)" id='addybutton' type="button">Add to Basket</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script> 
     // Define the product object structure
 function createProductObject(name, id, image_url, ecoscore) {
@@ -354,7 +362,15 @@ function addToCart(currProduct) {
     localStorage.setItem('cart', JSON.stringify(cart));
 
     // Optionally, you can provide feedback to the user, like displaying a confirmation message
-    alert('Product added to cart!');
+    // alert('Product added to cart!');
+    
+    // modal 
+    
+    
+    // change to added
+    $('#addybutton').text("Added to Basket")
+    
+    
 }
 
 
