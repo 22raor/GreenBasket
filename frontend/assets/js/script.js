@@ -46,6 +46,8 @@ let currUser;
     
         let user = await auth0Client.getUser();
         currUser = user;
+        
+        await currUser;
         updateUI();
 
 
@@ -62,9 +64,10 @@ let currUser;
     const isAuthenticated = await auth0Client.isAuthenticated();
   
     //change text on button to signed in instead of log in
-    console.log("Bitch we already logged in")
+   
     // document.getElementById("btn-logout").disabled = !isAuthenticated;
      if(isAuthenticated){
+          console.log("Bitch we already logged in")
          $('#loginbutton').text("Hi " + currUser['given_name']+"!")
          
        $('#loginbutton').attr("onclick","logout()")
