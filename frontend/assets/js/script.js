@@ -41,7 +41,12 @@ const configureClient = async () => {
       await auth0Client.handleRedirectCallback();
       
       updateUI();
-  
+    
+        let user = JSON.stringify(
+      await auth0Client.getUser()
+    );
+        
+        console.log(user)
       // Use replaceState to redirect the user away and remove the querystring parameters
       window.history.replaceState({}, document.title, "/");
     }
